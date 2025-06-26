@@ -23,4 +23,13 @@
             lastHoveredItem = li;
         }
     });
+
+    // Atalhos do teclado
+    document.addEventListener('keydown', e => {
+        // Unfollow: Ctrl + D
+        if (e.ctrlKey && e.key.toLowerCase() === 'd') {
+            e.preventDefault();
+            triggerAction();
+        }
+    });
 })
