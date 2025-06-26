@@ -31,5 +31,10 @@
             e.preventDefault();
             triggerAction();
         }
+        // Remove follower: Ctrl + F
+        if (e.ctrlKey && e.key.toLowerCase() === 'f') {
+            e.preventDefault();
+            triggerAction();
+        }
     });
 })
