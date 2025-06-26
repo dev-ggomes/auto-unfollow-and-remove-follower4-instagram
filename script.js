@@ -11,3 +11,9 @@
 // @license         MIT License
 
 // ==/UserScript==
+
+(function() {
+    'use strict';
+
+    let lastHoveredItem = null;
+})
