@@ -16,4 +16,11 @@
     'use strict';
 
     let lastHoveredItem = null;
+
+    // Marca o <li> quando o mouse passa por cima
+    document.addEventListener('mouseover', e => {
+        if (li && li.querySelector('button')) {
+            lastHoveredItem = li;
+        }
+    });
 })
