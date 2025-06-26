@@ -47,7 +47,7 @@
         // Se aparecer modal de confirmação, clica nele automaticamente
         setTimeout(() => {
             // Botões de confirmação constumam ter a classe -Cab_
-            const confirBtn = document.querySelector('button.-Cab_');
+            const confirmBtn = document.querySelector('button.-Cab_');
             if (confirmBtn) {
                 confirmBtn.click();
             }
