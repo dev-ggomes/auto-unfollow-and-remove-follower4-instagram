@@ -37,4 +37,20 @@
             triggerAction();
         }
     });
-})
+
+    function triggerAction() {
+        if (!lastHoveredItem) return;
+        const btn = lastHoveredItem.querySelector('button');
+        if (!btn) return;
+        btn.click();
+
+        // Se aparecer modal de confirmação, clica nele automaticamente
+        setTimeout(() => {
+            // Botões de confirmação constumam ter a classe -Cab_
+            const confirBtn = document.querySelector('button.-Cab_');
+            if (confirmBtn) {
+                confirmBtn.click();
+            }
+        }, 500);
+    }
+})();
