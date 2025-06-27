@@ -108,6 +108,6 @@
 
 <p>
   
-  This project is distributed under the **MIT License**. Check [LICENSE](https://github.com/dev-ggomes/auto-unfollow-and-remove-follower4-instagram/license) for full terms.
+  This project is distributed under the **MIT License**. Check [LICENSE](https://github.com/dev-ggomes/auto-unfollow-and-remove-follower4-instagram?tab=MIT-1-ov-file) for full terms.
 
 </p>
