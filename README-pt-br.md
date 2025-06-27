@@ -106,7 +106,7 @@
 ---
 
 > [!WARNING]
-> Eu **NÃO SOU** por nenhuma ação que o Instagram tome com a sua conta ou seu IP, seja ela temporária ou permanente. Este projeto foi desenvolvido para **testar meu conhecimento**. Use **por conta própria** e com o **seu próprio risco**.
+> Eu **NÃO SOU** responsável por nenhuma ação que o Instagram tenha com a sua conta ou com seu IP, seja ela temporária ou permanente. Este projeto foi desenvolvido para **testar meu conhecimento**. Use **por conta própria** e com **seu próprio risco**.
 
 ---
 </p>
