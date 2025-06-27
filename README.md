@@ -1,3 +1,9 @@
+<!-- |||||||||||||||||||| EN - PT |||||||||||||||||||| -->
+<p align='center'>
+  <a href="https://github.com/dev-ggomes/auto-unfollow-and-remove-follower4-instagram/blob/main/README.md">🇺🇸 English</a> | 
+  <a href="https://github.com/dev-ggomes/auto-unfollow-and-remove-follower4-instagram/blob/main/README-pt-pt.md">ᴘᴛ Português</a>
+</p>
+
 <h1 align="center">
   🚀 Instagram CLI Manager
 </h1>
