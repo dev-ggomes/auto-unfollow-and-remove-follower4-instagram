@@ -68,7 +68,7 @@
 >[!NOTE]
 > Nenhuma credencial é guardada neste repositório nem em lado nenhum.
 
-## 🏃‍♂️ Usage
+## 🏃‍♂️ Como usar
 
 <p>
   
