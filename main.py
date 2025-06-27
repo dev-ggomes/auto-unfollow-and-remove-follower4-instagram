@@ -22,24 +22,22 @@ HEADERS = {
     'Referer': 'https://www.instagram.com/',
 }
 
-# Criar um gerenciador de cookies
+# Gerenciador de cookies
 cj = cookiejar.CookieJar()
-opener = request.build_opener(
-    request.HTTPCookieProcessor(cj)
-)
+opener = request.build_opener(request.HTTPCookieProcessor(cj))
 opener.addheaders = list(HEADERS.items())
 
 
 def fetch_csrf_token():
-    '''Faz GET na página principal para obter CSRF token.'''
-    req = opener.open('https://www.instagram.com/')
-    html = req.read().decode('utf-8')
+    """Faz GET na página principal para obter CSRF token."""
+    res = opener.open('https://www.instagram.com/')
+    html = res.read().decode('utf-8')
     m = re.search(r'"csrf_token":"(?P<token>[^"]+)"', html)
     return m.group('token') if m else None
 
 
 def login(csrf_token):
-    '''Faz login via AJAX.'''  
+    """Faz login via AJAX no Instagram."""
     data = parse.urlencode({
         'username': IG_USERNAME,
         'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:{int(time.time())}:{IG_PASSWORD}'
@@ -51,7 +49,12 @@ def login(csrf_token):
     })
     req = request.Request(LOGIN_URL, data=data, headers=headers)
     res = opener.open(req)
-    resp = json.loads(res.read().decode())
+    raw = res.read().decode()
+    try:
+        resp = json.loads(raw)
+    except json.JSONDecodeError:
+        print(f'Falha ao fazer login, resposta inesperada: {raw}')
+        sys.exit(1)
     if not resp.get('authenticated'):
         print('Falha no login:', resp)
         sys.exit(1)
@@ -59,35 +62,43 @@ def login(csrf_token):
 
 
 def get_user_id(username):
-    '''Recupera o user_id a partir da página de perfil do usuário.'''
-    req = opener.open(PROFILE_URL.format(username))
-    html = req.read().decode('utf-8')
+    """Recupera o user_id a partir da página de perfil."""
+    res = opener.open(PROFILE_URL.format(username))
+    html = res.read().decode('utf-8')
     m = re.search(r'"profilePage_(?P<id>\d+)"', html)
     return m.group('id') if m else None
 
 
 def do_action(user, action):
-    '''Executa unfollow ou remove_follower para o usuário especificado.'''
+    """Executa unfollow ou remove_follower para o usuário especificado."""
     uid = get_user_id(user)
     if not uid:
         print(f'Não encontrou user_id para {user}')
         return
     url = (UNFOLLOW_URL if action == 'unfollow' else REMOVE_FOLLOWER_URL).format(uid)
 
-    # Atualiza CSRF token para a ação
+    # Atualiza CSRF token
     token = fetch_csrf_token()
     if not token:
         print('Não conseguiu obter CSRF token para a ação.')
         return
 
     headers = HEADERS.copy()
-    headers['X-CSRFToken'] = token
-    headers['X-Requested-With'] = 'XMLHttpRequest'
+    headers.update({
+        'X-CSRFToken': token,
+        'X-Requested-With': 'XMLHttpRequest'
+    })
+    # Envia POST vazio para acionar a ação
+    req = request.Request(url, data=b'', headers=headers)
+    res = opener.open(req)
+    raw = res.read().decode()
+    try:
+        data = json.loads(raw)
+        status = 'OK' if data.get('status') == 'ok' else f"Erro: {data}"
+    except json.JSONDecodeError:
+        print(f'Não foi possível decodificar JSON para {action} {user}: {raw}')
+        return
 
-    req = request.Request(url, method='POST', headers=headers)
-    resp = opener.open(req)
-    data = json.loads(resp.read().decode())
-    status = 'OK' if data.get('status') == 'ok' else 'Erro'
     verb = 'Unfollowed' if action == 'unfollow' else 'Removed follower'
     print(f'{verb} {user}: {status}')
 
@@ -99,15 +110,14 @@ def main():
     action = sys.argv[1]
     users = sys.argv[2:]
 
-    # Primeiro, obtém token e faz login
+    # Inicializa e faz login
     token = fetch_csrf_token()
     if not token:
         print('Não conseguiu obter CSRF token inicial.')
         sys.exit(1)
-
     login(token)
 
-    # Executa ações para cada usuário
+    # Executa ações
     for user in users:
         do_action(user, action)
         time.sleep(2)
