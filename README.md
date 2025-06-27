@@ -99,7 +99,7 @@
 ---
 
 > [!WARNING]
-> I am **NOT** responsible for any taken actions by Instagram to your account or your IP, either they are temporarily or permantly. This script was developed to **test my knowledge**. Use it on **your own resposibily** and **risk**.
+> I am **NOT** responsible for any taken actions by Instagram to your account or your IP, either they are temporarily or permantly. This script was developed to **test my knowledge**. Use it on **your own responsibily** and **risk**.
 
 ---
 </p>
